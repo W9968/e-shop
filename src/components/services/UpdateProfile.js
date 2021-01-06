@@ -1,44 +1,100 @@
 import React, { useRef, useState } from "react";
+import { useAuth } from "../auth/AuthContext";
+import { useHistory } from "react-router-dom";
 
 // ant design component call
 import styled from "styled-components";
-import { Row, Input, Button } from "antd";
-import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { Row, Alert, message } from "antd";
+import { AiOutlineSetting } from "react-icons/ai";
 
 const UpdateProfile = () => {
   document.title = "HANOUTI | Update Profile";
 
+  // get input value
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+
+  const { currentUser, updatePassword, updateEmail } = useAuth();
+  const [error, setError] = useState("");
+  const history = useHistory();
+
+  const handleSumbit = async (e) => {
+    e.preventDefault();
+
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords do not match");
+    }
+
+    const promises = [];
+    setError("");
+
+    if (emailRef.current.value !== currentUser.email) {
+      await promises.push(updateEmail(emailRef.current.value));
+    }
+    if (passwordRef.current.value) {
+      await promises.push(updatePassword(passwordRef.current.value));
+    }
+
+    Promise.all(promises)
+      .then(() => {
+        history.push("/dashboard");
+        message.success("Info updated");
+      })
+      .catch(() => {
+        message.error("Failed to update your info");
+      })
+      .finally(() => {
+        message.info("update", 2.5);
+      });
+  };
+
   return (
     <>
       <Wrapper>
-        <Form>
+        <Form onSubmit={handleSumbit}>
           <StyledRow>
             <Text>update profile</Text>
             <Ficon />
           </StyledRow>
           <InputGroup>
-            <Label>e-mail</Label>
+            <Label>E-mail</Label>
             <StyledInput
               required
-              placeholder="E-mail"
               type="email"
-              size="large"
-              prefix={<AiOutlineMail />}
+              placeholder="Email"
+              ref={emailRef}
+              autoComplete="nope"
+              defaultValue={currentUser.email}
             />
           </InputGroup>
           <InputGroup>
-            <Label>password</Label>
+            <Label>Password</Label>
             <StyledInput
-              required
               placeholder="Password"
+              ref={passwordRef}
               type="password"
               size="large"
-              prefix={<AiOutlineLock />}
             />
           </InputGroup>
+
+          <InputGroup>
+            <Label> Confirm password</Label>
+            <StyledInput
+              type="password"
+              placeholder="leave black to keep password the same"
+              ref={passwordConfirmRef}
+              autoComplete="nope"
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <p>{error && <Alert message={error} type="error" />}</p>
+          </InputGroup>
+
           <InputGroup>
             <Row>
-              <StyledButton type="submit">Login</StyledButton>
+              <StyledButton type="submit">Update</StyledButton>
             </Row>
           </InputGroup>
         </Form>
@@ -75,7 +131,7 @@ const Text = styled.h1`
   text-transform: capitalize;
 `;
 
-const Ficon = styled(AiOutlineUser)`
+const Ficon = styled(AiOutlineSetting)`
   font-size: 25px;
   margin: 1rem 0.5rem;
   color: var(--neut-white);
@@ -83,6 +139,9 @@ const Ficon = styled(AiOutlineUser)`
 
 const Form = styled.form`
   border: 2px solid var(--neut-black);
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const InputGroup = styled.div`

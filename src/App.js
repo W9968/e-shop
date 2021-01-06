@@ -10,7 +10,7 @@ import UpdateProfile from "./components/services/UpdateProfile";
 import ForgotPassword from "./components/services/ForgotPassword";
 import EnterShopDetails from "./components/pages/EnterShopDetails";
 import Dashboard from "./components/pages/Dashboard";
-import Lists from "./components/pages/Lists";
+import CreateListening from "./components/pages/CreateListening";
 
 import AuthProvider from "./components/auth/AuthContext";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -32,7 +32,7 @@ function App() {
                 path="/forgot-password"
                 component={ForgotPassword}
               />
-              <PrivateRoute path="/lists" component={Lists} />
+              <PrivateRoute path="/listening" component={CreateListening} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/shop-details" component={EnterShopDetails} />
             </Switch>

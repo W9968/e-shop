@@ -135,6 +135,10 @@ const Ficon = styled(AiOutlineUserAdd)`
 
 const Form = styled.form`
   border: 2px solid var(--neut-black);
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const InputGroup = styled.div`

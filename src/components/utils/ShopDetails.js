@@ -84,7 +84,7 @@ const ShopDetails = () => {
 
         setError("");
 
-        history.push("/dashboard");
+        history.push("/listening");
         message.success("Saved successfully", 2.5);
       } catch {
         message.error("Something went wrong you may check your connection");

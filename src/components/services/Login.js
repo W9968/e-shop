@@ -25,7 +25,7 @@ const Login = () => {
       setLoading(true);
       message.loading("action in progress..", 2.5);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/lists");
+      history.push("/dashboard");
       message.success("Access granted", 2.5);
     } catch {
       message.error("Please verify your informations");
@@ -121,6 +121,10 @@ const Ficon = styled(AiOutlineUser)`
 
 const Form = styled.form`
   border: 2px solid var(--neut-black);
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const InputGroup = styled.div`

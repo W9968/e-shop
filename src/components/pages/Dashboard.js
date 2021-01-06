@@ -1,7 +1,13 @@
 import React from "react";
 
+import Profile from "../utils/Profile";
+
 const Dashboard = () => {
-  return <></>;
+  return (
+    <>
+      <Profile />
+    </>
+  );
 };
 
 export default Dashboard;
