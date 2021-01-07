@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 // ant design componenet call
 import styled from "styled-components";
@@ -12,20 +13,20 @@ const NavBar = () => {
       <StyledRow>
         <StyledMenu theme="dark" mode="horizontal" defaultSelectedKeys={["4"]}>
           <StyledMenu.Item key="man" icon={<IoManOutline />}>
-            Man
+            <Link to="/man">Man</Link>
           </StyledMenu.Item>
           <StyledMenu.Item key="womenn" icon={<IoWomanOutline />}>
-            Women
+            <Link to="/women">Women</Link>
           </StyledMenu.Item>
           <StyledMenu.Item key="shoes" icon={<GiRunningShoe />}>
-            Shoes
+            <Link to="/shoes">Shoes</Link>
           </StyledMenu.Item>
 
           <StyledMenu.Item key="hats" icon={<GiWinterHat />}>
-            Hats
+            <Link to="/hats">Hats</Link>
           </StyledMenu.Item>
-          <StyledMenu.Item key="accessories" icon={<GiWinterHat />}>
-            Accessories
+          <StyledMenu.Item key="accessories" icon={<GiAchievement />}>
+            <Link to="/accessories">Accessories</Link>
           </StyledMenu.Item>
         </StyledMenu>
       </StyledRow>

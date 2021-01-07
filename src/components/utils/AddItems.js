@@ -8,7 +8,7 @@ import firebase from "firebase/app";
 import styled from "styled-components";
 import { Row, Select, Card, message, Alert } from "antd";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
-import Pri from "./avatar.svg";
+import Pri from "../assets/avatar.svg";
 
 const AddItems = () => {
   // hooks

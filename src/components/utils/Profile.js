@@ -64,6 +64,8 @@ const Profile = () => {
 
 export default Profile;
 
+/* Style */
+
 const Wrapper = styled(Row)`
   border-top: 1px solid var(--neut-white);
   background-color: var(--neut-black);

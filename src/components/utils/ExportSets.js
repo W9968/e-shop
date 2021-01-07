@@ -1,45 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../auth/AuthContext";
+import React, { useEffect, useState } from "react";
 import { useFireStore } from "../auth/Firebase";
+import { add, exists, quantity } from "cart-localstorage";
 
-// ant design componenet call
+// ant design componenet
 import styled from "styled-components";
-import { Row, Card, Alert } from "antd";
-import { AiOutlineDelete } from "react-icons/ai";
+import { Row, Card } from "antd";
+import { MdAddShoppingCart } from "react-icons/md";
 
-const UserList = () => {
-  const { currentUser } = useAuth();
-  const [error, setError] = useState("");
+const ExportSets = ({ coll }) => {
   const [sockets, setSockets] = useState([]);
 
   useEffect(() => {
-    const pullBucketData = async () => {
+    const pullData = async () => {
       return await useFireStore
-        .collection("Items")
-        .doc("articles")
-        .collection(`${currentUser.uid}`)
+        .collection("bucket")
+        .doc("items")
+        .collection(`${coll}`)
         .orderBy("createdAt", "desc")
         .onSnapshot((snapshot) => {
           const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           }));
-          console.log(data);
-          data.length === 0 ? setError("Your Locker is empty") : setError("");
           setSockets(data);
         });
     };
 
     // we use pull effect to ovoid memory leak
-
-    pullBucketData();
+    pullData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
       <Wrapper>
         <StyledRow>
-          <Text>list your Items</Text>
+          <Text>for {coll}</Text>
         </StyledRow>
         <Container>
           {sockets.map((socket, index) => {
@@ -51,13 +46,15 @@ const UserList = () => {
                 title={socket.title}
                 extra={
                   <Ficon
-                    onClick={() => {
-                      useFireStore
-                        .collection("Items")
-                        .doc("articles")
-                        .collection(`${currentUser.uid}`)
-                        .doc(`${socket.id}`)
-                        .delete();
+                    onClick={async () => {
+                      if (exists({ index }) === true) {
+                        quantity(index, 1);
+                      }
+                      await add({
+                        id: `${socket.id}` + 1,
+                        name: `${socket.title}`,
+                        price: parseInt(socket.price),
+                      });
                     }}
                   />
                 }
@@ -67,20 +64,18 @@ const UserList = () => {
                   className="preview"
                   src={socket.avatar}
                 />
-                <p>{socket.time}</p>
                 <p>{socket.price}.000 dtn</p>
                 <p>{socket.infos}</p>
               </StyledCard>
             );
           })}
         </Container>
-        <Row>{error && <Alert message={error} type="info" />}</Row>
       </Wrapper>
     </>
   );
 };
 
-export default UserList;
+export default ExportSets;
 
 /* Stymes */
 
@@ -94,16 +89,16 @@ const Wrapper = styled.div`
 `;
 
 const StyledRow = styled(Row)`
+  margin: 2rem;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: var(--dust-red);
+  justify-content: flex-start;
 `;
 
 const Text = styled.h1`
   margin: 1rem 0.5rem;
-  color: var(--neut-white);
+  color: var(--neut-black);
   text-transform: capitalize;
 `;
 
@@ -124,11 +119,11 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const Ficon = styled(AiOutlineDelete)`
+const Ficon = styled(MdAddShoppingCart)`
   cursor: pointer;
   font-size: 25px;
   margin: 1rem 0.5rem;
-  color: var(--dust-red);
+  color: var(--pola-cyan);
   transition: 0.3s ease-in-out;
 
   &:hover {
