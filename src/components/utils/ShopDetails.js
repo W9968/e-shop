@@ -5,13 +5,13 @@ import { useFireStore, useFireStorage } from "../auth/Firebase";
 
 // ant design componenet call
 import styled from "styled-components";
-import { Upload, message, Button, Row, Switch, Alert } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { message, Row, Switch, Alert } from "antd";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 
 const ShopDetails = () => {
   //hooks
   const [imgUrl, setImgUrl] = useState();
+  const [upload, setUpload] = useState(true);
   const [error, setError] = useState("");
 
   const history = useHistory();
@@ -23,35 +23,20 @@ const ShopDetails = () => {
   const zipNumber = useRef();
 
   // files upload
+  const HandleFile = async (event) => {
+    let reader = new FileReader();
 
-  const loadFile = async (fileName) => {
-    const user = `storephoto/${currentUser.uid}`;
+    reader.readAsDataURL(event.target.files[0]);
     const StorageRef = useFireStorage.ref();
-    const fileRef = StorageRef.child(user + "/" + fileName);
-    await fileRef.put(fileName).then(() => {
+    const fileRef = StorageRef.child(
+      `storephoto/${currentUser.uid}/` + event.target.files[0].name
+    );
+    await fileRef.put(event.target.files[0]).then(() => {
       console.log("file loaded");
+      setUpload(false);
+      message.success("File loaded");
     });
     setImgUrl(await fileRef.getDownloadURL());
-  };
-
-  const props = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-        console.log(info.file.name);
-        loadFile(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
   };
 
   // save information
@@ -162,11 +147,19 @@ const ShopDetails = () => {
             />
           </InputGroup>
 
-          <FixedRow>
-            <Upload {...props}>
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </FixedRow>
+          <InputGroup>
+            <Label>Image Of your Shop</Label>
+
+            <StyledInput
+              required
+              type="file"
+              name="upload"
+              id="upload"
+              className="upload-box"
+              placeholder="Upload File"
+              onChange={HandleFile}
+            />
+          </InputGroup>
 
           <InputGroup>
             <Row>
@@ -177,7 +170,9 @@ const ShopDetails = () => {
 
           <InputGroup>
             <Row>
-              <StyledButton htmltype="submit">Save Infos </StyledButton>
+              <StyledButton disabled={upload} htmltype="submit">
+                Save Infos{" "}
+              </StyledButton>
             </Row>
           </InputGroup>
         </Form>
@@ -219,7 +214,11 @@ const Ficon = styled(AiOutlineUnorderedList)`
   color: var(--neut-white);
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+`;
 
 const InputGroup = styled.div`
   display: flex;
@@ -242,12 +241,6 @@ const StyledInput = styled.input`
 const Label = styled.label`
   text-align: start;
   font-size: 15px;
-`;
-
-const FixedRow = styled(Row)`
-  display: flex;
-  align-items: clear;
-  justify-content: center;
 `;
 
 const StyledButton = styled.button`

@@ -45,7 +45,7 @@ const UpdateProfile = () => {
         message.error("Failed to update your info");
       })
       .finally(() => {
-        message.info("update", 2.5);
+        message.info("updated", 2.5);
       });
   };
 

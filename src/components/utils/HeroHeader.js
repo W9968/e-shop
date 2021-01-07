@@ -3,12 +3,15 @@ import React from "react";
 // ant design componenet call
 import styled from "styled-components";
 import { Row } from "antd";
+import { Link } from "react-router-dom";
 
 const HeroHeader = ({ name }) => {
   return (
     <>
       <StyledRow>
-        <Text>{name}</Text>
+        <Text>
+          <Link to="/">{name}</Link>
+        </Text>
       </StyledRow>
     </>
   );

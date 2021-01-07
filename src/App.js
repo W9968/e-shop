@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { Wrapper, GlobalStyle } from "./Theme.global";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
+import NavBar from "./components/utils/NavBar";
 import Login from "./components/services/Login";
 import Signup from "./components/services/Signup";
 import HeroHeader from "./components/utils/HeroHeader";
@@ -24,6 +25,7 @@ function App() {
         <Wrapper>
           <Router>
             <HeroHeader name="HANOUTI" />
+            <NavBar />
             <Switch>
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <ProtectedRoute path="/signup" component={Signup} />
