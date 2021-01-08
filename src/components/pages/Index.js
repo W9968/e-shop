@@ -15,6 +15,7 @@ import women from "../assets/sources/women.jpg";
 import man from "../assets/sources/man.jpg";
 
 const Index = () => {
+  document.title = "HANOUTI";
   return (
     <>
       <Caroussel />

@@ -9,6 +9,7 @@ import { Table, List, Button, Row, Tag } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
 const Checkout = () => {
+  document.title = "HANOUTI | Checkout";
   const { Column } = Table;
   const data = list();
 
@@ -83,7 +84,6 @@ const Checkout = () => {
                 image=""
                 description="Clothing brand"
                 amount={total() * 100}
-                currency="DTN"
                 stripeKey="pk_test_51I4STaBEBLmRHvyUdcdkgIxqDtxeyOYj98g5pFAT6LcsyqHaAltGXThT31DrEnl80xojGMtxWSbPwBl2SShkT1LY00qCKkFv3Y"
               />
               <StyledButton
@@ -134,12 +134,6 @@ const StyledRow = styled(Row)`
   .name {
     width: 250px;
     font-size: 1rem;
-  }
-
-  .stripe-button-el > span {
-    background: #5e366a !important;
-    background-image: none !important;
-    background-color: #5e366a !important;
   }
 `;
 

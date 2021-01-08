@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Row, Menu } from "antd";
 import { IoManOutline, IoWomanOutline } from "react-icons/io5";
+import { RiUserSettingsLine } from "react-icons/ri";
 import { GiRunningShoe, GiWinterHat, GiAchievement } from "react-icons/gi";
 
 const NavBar = () => {
@@ -12,6 +13,9 @@ const NavBar = () => {
     <>
       <StyledRow>
         <StyledMenu theme="dark" mode="horizontal" defaultSelectedKeys={["4"]}>
+          <StyledMenu.Item key="dashboard" icon={<RiUserSettingsLine />}>
+            <Link to="/dashboard">Dashboard</Link>
+          </StyledMenu.Item>
           <StyledMenu.Item key="man" icon={<IoManOutline />}>
             <Link to="/man">Man</Link>
           </StyledMenu.Item>
