@@ -24,7 +24,6 @@ const UserList = () => {
             id: doc.id,
             ...doc.data(),
           }));
-          console.log(data);
           data.length === 0 ? setError("Your Locker is empty") : setError("");
           setSockets(data);
         });

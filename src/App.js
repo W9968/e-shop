@@ -24,6 +24,8 @@ import Shoes from "./components/docs/Shoes";
 import Hats from "./components/docs/Hats";
 import Accessories from "./components/docs/Accessories";
 import Index from "./components/pages/Index";
+import Checkout from "./components/pages/Checkout";
+import Verife from "./components/utils/Verife";
 
 function App() {
   return (
@@ -55,7 +57,8 @@ function App() {
               <Route path="/shoes" component={Shoes} />
               <Route path="/hats" component={Hats} />
               <Route path="/accessories" component={Accessories} />
-
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/verife" component={Verife} />
               {/* end */}
             </Switch>
           </Router>

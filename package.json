@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stripe/stripe-js": "^1.11.0",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "antd": "^4.10.0",
+    "axios": "^0.21.1",
     "cart-localstorage": "^1.1.5",
     "firebase": "^8.2.1",
     "react": "^17.0.1",
@@ -14,6 +16,7 @@
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "stripe": "^8.130.0",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },

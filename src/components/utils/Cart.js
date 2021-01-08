@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { list } from "cart-localstorage";
 
 // ant design component
-import styled, { keyframes, Keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Badge } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -24,7 +24,7 @@ const Cart = () => {
   return (
     <>
       <StyledBadge count={cart}>
-        <Linker to="">
+        <Linker to="/checkout">
           <FiShoppingCart className="head-example" />
         </Linker>
       </StyledBadge>
@@ -35,10 +35,10 @@ const Cart = () => {
 export default Cart;
 
 const StyledBadge = styled(Badge)`
+  z-index: 999;
   position: fixed;
   top: 95%;
   left: 95%;
-  mix-blend-mode: difference;
   transform: translate(-95%, -95%);
 `;
 
@@ -67,7 +67,7 @@ const Linker = styled(Link)`
   border-radius: 10px;
   transition: 0.3s ease-in-out;
   padding: 10px 13px 10px 10px;
-  color: var(--dust-red);
+  color: var(--neut-gray);
   background-color: var(--neut-black);
 
   &:hover {
