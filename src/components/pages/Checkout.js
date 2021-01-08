@@ -76,29 +76,31 @@ const Checkout = () => {
             <Column title="Quantity" dataIndex="quantity" key="quantity" />
           </Table>
 
-          <Row>
-            <form>
-              <StripeCheckout
-                name="Hanouti Inc."
-                token={onToken}
-                image=""
-                description="Clothing brand"
-                amount={total() * 100}
-                stripeKey="pk_test_51I4STaBEBLmRHvyUdcdkgIxqDtxeyOYj98g5pFAT6LcsyqHaAltGXThT31DrEnl80xojGMtxWSbPwBl2SShkT1LY00qCKkFv3Y"
-              />
-              <StyledButton
-                disabled={total() === 0 ? true : false}
-                type="primary"
-                htmlType="submit"
-              >
-                Amount to pay: {total()} dtn{" "}
-              </StyledButton>
-            </form>
+          <StyledRow>
+            <StyledButton
+              disabled={total() === 0 ? true : false}
+              type="primary"
+              htmlType="submit"
+            >
+              Amount to pay: {total()} dtn{" "}
+            </StyledButton>
 
             <StyledButton type="danger">
               <Link to="/verife">Clear List</Link>
             </StyledButton>
-          </Row>
+          </StyledRow>
+          <StyledRow>
+            <div className="btns">
+              <StripeCheckout
+                name="Hanouti Inc."
+                token={onToken}
+                image="https://s.shld.net/is/image/Sears/k_layaway_shop_now"
+                description="Clothing brand"
+                amount={total() * 100}
+                stripeKey="pk_test_51I4STaBEBLmRHvyUdcdkgIxqDtxeyOYj98g5pFAT6LcsyqHaAltGXThT31DrEnl80xojGMtxWSbPwBl2SShkT1LY00qCKkFv3Y"
+              />
+            </div>
+          </StyledRow>
         </Content>
       </Container>
     </>
@@ -134,6 +136,10 @@ const StyledRow = styled(Row)`
   .name {
     width: 250px;
     font-size: 1rem;
+  }
+
+  .btns {
+    margin: 0rem 1rem;
   }
 `;
 
