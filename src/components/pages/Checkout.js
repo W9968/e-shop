@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { total, list, quantity } from "cart-localstorage";
+import StripeCheckout from "react-stripe-checkout";
 
 // ant design component
 import styled from "styled-components";
-import { Table, List, Space, Button, Row, Tag } from "antd";
+import { Table, List, Button, Row, Tag } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
 const Checkout = () => {
   const { Column } = Table;
   const data = list();
 
+  // eslint-disable-next-line no-unused-vars
   const [a, setQuant] = useState(); // eslint-disable-next-line no-unused-vars
-  const [a2, setQuant2] = useState(); // eslint-disable-next-line no-unused-vars
+  const [a2, setQuant2] = useState();
+
+  const onToken = (token) => {
+    fetch("/save-stripe-token", {
+      method: "POST",
+      body: JSON.stringify(token),
+    }).then((response) => {
+      response.json().then((data) => {
+        alert(`We are in business, ${data.email}`);
+      });
+    });
+  };
 
   return (
     <>
@@ -63,9 +76,25 @@ const Checkout = () => {
           </Table>
 
           <Row>
-            <StyledButton disabled={total() == 0 ? true : false} type="primary">
-              Pay: {total()} dtn
-            </StyledButton>
+            <form>
+              <StripeCheckout
+                name="Hanouti Inc."
+                token={onToken}
+                image=""
+                description="Clothing brand"
+                amount={total() * 100}
+                currency="DTN"
+                stripeKey="pk_test_51I4STaBEBLmRHvyUdcdkgIxqDtxeyOYj98g5pFAT6LcsyqHaAltGXThT31DrEnl80xojGMtxWSbPwBl2SShkT1LY00qCKkFv3Y"
+              />
+              <StyledButton
+                disabled={total() === 0 ? true : false}
+                type="primary"
+                htmlType="submit"
+              >
+                Amount to pay: {total()} dtn{" "}
+              </StyledButton>
+            </form>
+
             <StyledButton type="danger">
               <Link to="/verife">Clear List</Link>
             </StyledButton>
@@ -105,6 +134,12 @@ const StyledRow = styled(Row)`
   .name {
     width: 250px;
     font-size: 1rem;
+  }
+
+  .stripe-button-el > span {
+    background: #5e366a !important;
+    background-image: none !important;
+    background-color: #5e366a !important;
   }
 `;
 

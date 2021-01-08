@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import Caroussel from "../utils/Caroussel";
+import Footer from "../utils/Footer";
 
 // and design compoenent
 import styled from "styled-components";
@@ -50,6 +52,7 @@ const Index = () => {
           </StyledCol>
         </StyledRow>
       </Wrapper>
+      <Footer />
     </>
   );
 };
